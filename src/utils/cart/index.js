@@ -7,3 +7,16 @@ export const addItemToCart = (cartItems, newItem) => {
     }
     return [...cartItems, { ...newItem, quantity: 1 }];
 };
+export const clearItemFromCart = (cartItems, item) => {
+    let newCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
+    return newCartItems;
+};
+export const removeItemFromCart = (cartItems, item) => {
+    let existingCartItem = cartItems.find((cartItem) => cartItem.id === item.id);
+    if (existingCartItem.quantity === 1) {
+        return clearItemFromCart(cartItems, existingCartItem);
+    }
+    return cartItems.map((cartItem) =>
+        cartItem.id === item.id ? { ...cartItem, quantity: --cartItem.quantity } : cartItem
+    );
+};
